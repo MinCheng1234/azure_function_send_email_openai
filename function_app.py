@@ -3,7 +3,7 @@ import logging
 import json
 import smtplib
 from email.mime.text import MIMEText
-from azure.identity import DefaultAzureCredential
+from azure.identity import ManagedIdentityCredential
 from azure.keyvault.secrets import SecretClient
 import azure.functions as func
 
@@ -11,7 +11,7 @@ app = func.FunctionApp()
 
 # Set up Key Vault client
 key_vault_url = os.getenv("KEY_VAULT_URL")  # Key Vault URL from environment variables
-credential = DefaultAzureCredential()
+credential = ManagedIdentityCredential()
 client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 @app.function_name(name="SendEmail")
